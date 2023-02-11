@@ -23,3 +23,13 @@ func TestParseJSON_BrokenJSON(t *testing.T) {
 	_, err := ppcat.ParseJSON([]byte(line))
 	assert.Error(err)
 }
+
+func TestParseJSON_JSONWithSpecialChars(t *testing.T) {
+	assert := assert.New(t)
+	line := `{"foo":"bar&zoo"}`
+	out, err := ppcat.ParseJSON([]byte(line))
+	assert.NoError(err)
+	assert.Equal(`{
+  "foo": "bar&zoo"
+}`, string(out))
+}

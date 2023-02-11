@@ -1,6 +1,7 @@
 package ppcat
 
 import (
+	"bytes"
 	"encoding/json"
 	"regexp"
 )
@@ -18,5 +19,21 @@ func ParseJSON(line []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	return json.MarshalIndent(parsedLine, "", "  ")
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "  ")
+	err = enc.Encode(parsedLine)
+
+	if err != nil {
+		return nil, err
+	}
+
+	pp := buf.Bytes()
+
+	if pp[len(pp)-1] == '\n' {
+		pp = pp[:len(pp)-1]
+	}
+
+	return pp, nil
 }
