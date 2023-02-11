@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	re := regexp.MustCompile(`^\s*[[{]`)
+	re := regexp.MustCompile(`^\s*(?:{|\[{)`)
 	Matcher[re] = ParseJSON
 }
 
