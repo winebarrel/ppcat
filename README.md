@@ -51,3 +51,9 @@ London Bridge is broken down,
 {"foo": // broken
 My fair lady.
 ```
+
+## Installation
+
+```
+brew install winebarrel/ppcat/ppcat
+```
