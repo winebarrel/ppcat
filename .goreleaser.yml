@@ -1,0 +1,33 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/ppcat
+    ldflags:
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+checksum:
+  name_template: "checksums.txt"
+brews:
+  - tap:
+      owner: winebarrel
+      name: homebrew-ppcat
+    homepage: https://github.com/winebarrel/ppcat
+    description: ppcat is a tool to format JSON in the middle of text.
+    license: MIT
+    install: |
+      bin.install 'ppcat'
+nfpms:
+  - file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Arch }}"
+    homepage: https://github.com/winebarrel/ppcat
+    maintainer: Genki Sugawara <sugawara@winebarrel.jp>
+    description: ppcat is a tool to format JSON in the middle of text.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    bindir: /usr/bin
