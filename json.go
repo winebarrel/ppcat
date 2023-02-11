@@ -29,11 +29,5 @@ func ParseJSON(line []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	pp := buf.Bytes()
-
-	if pp[len(pp)-1] == '\n' {
-		pp = pp[:len(pp)-1]
-	}
-
-	return pp, nil
+	return bytes.TrimSuffix(buf.Bytes(), []byte{'\n'}), nil
 }
